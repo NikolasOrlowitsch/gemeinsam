@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Main {
 
     /**
@@ -24,7 +26,19 @@ public class Main {
     }
 
     static int findeKaeferInBaum(Baum baum) {
-        // Bitte hier die Lösung eintragen
-        return 0;
+        return zaehleKaefer(baum.getAeste());
     }
+
+    private static int zaehleKaefer(List<Ast> aeste){
+        int kaeferZahl = 0;
+        for (Ast ast : aeste) {
+            for (Blatt blatt : ast.getBlaetter()){
+                if (blatt.hatKaefer())
+                    kaeferZahl++;
+            }
+            kaeferZahl += zaehleKaefer(ast.getAeste());
+        }
+        return kaeferZahl;
+    }
+
 }
