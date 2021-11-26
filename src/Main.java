@@ -26,17 +26,22 @@ public class Main {
     }
 
     static int findeKaeferInBaum(Baum baum) {
-        return zaehleKaefer(baum.getAeste());
+        return findeKaeferAbAesten(baum.getAeste());
     }
 
-    private static int zaehleKaefer(List<Ast> aeste){
+    /**
+     * Zählt alle Käfer auf Blättern der übergebenen Äste, inklusive denen aller mit ihnen verbundenen Äste.
+     * @param aeste Zu untersuchende Äste
+     * @return Anzahl von Käfern
+     */
+    private static int findeKaeferAbAesten(List<Ast> aeste){
         int kaeferZahl = 0;
         for (Ast ast : aeste) {
             for (Blatt blatt : ast.getBlaetter()){
                 if (blatt.hatKaefer())
                     kaeferZahl++;
             }
-            kaeferZahl += zaehleKaefer(ast.getAeste());
+            kaeferZahl += findeKaeferAbAesten(ast.getAeste());
         }
         return kaeferZahl;
     }
